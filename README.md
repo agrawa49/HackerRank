@@ -1,2 +1,2 @@
 # HackerRank
-My solutions to the HackerRank questions I solve.
+My java solutions to the HackerRank questions I solve.
