@@ -1,0 +1,80 @@
+import java.io.*;
+import java.util.*;
+import java.text.*;
+import java.math.*;
+import java.util.regex.*;
+
+public class Solution {
+    /*
+ * Complete the function below.
+ */
+ // the other test cases that are failining are 10000 numbers all in desc order- except the last 2 elements are 2, 1. FYI :-)
+
+
+// I understood the question wrong. I thought that I had to find the difference between the maximum number in the array and the minimum number before it. Now that I read it again, I understood that we need to find the maximum difference (a[j] - a[i]) in the array such that j > i and a[j] > a[i].
+
+    static int maxDifference(int[] a) {
+        int min = a[0];
+        int tempDiff = 0;
+        int diff = -1;
+        
+        // These are 2 brute force methods taking O(n^2) time
+        /*
+        for (int i = 0; i < a.length; i++) {
+            for (int j = i + 1; j < a.length; j++) {
+                diff = a[j] - a[i];
+                if (diff > max)
+                    max = diff;
+            }
+        }
+        
+        // This one is a slightly better version but the runtime is still O(n^2)
+        for (int i = 0; i < a.length; i++) {
+            if (i != 0 && a[i] > a[i - 1])
+                continue;
+            for (int j = i + 1; j < a.length; j++) {
+                diff = a[j] - a[i];
+                if (diff > max)
+                    max = diff;
+            }
+        }
+        */
+        
+        
+        // This is my final implementation. Ran all testcases at 15:54 PM
+        for (int i = 1; i < a.length; i++) {
+            if (a[i] < min)
+                min = a[i];
+            else {
+                tempDiff = a[i] - min;
+                if (tempDiff > diff) {
+                    diff = tempDiff;
+                }
+            }
+        }
+        
+        return diff;
+    }
+
+    public static void main(String[] args) throws IOException{
+        Scanner in = new Scanner(System.in);
+        final String fileName = System.getenv("OUTPUT_PATH");
+        BufferedWriter bw = new BufferedWriter(new FileWriter(fileName));
+        int res;
+        
+        int _a_size = 0;
+        _a_size = Integer.parseInt(in.nextLine());
+        int[] _a = new int[_a_size];
+        int _a_item;
+        for(int _a_i = 0; _a_i < _a_size; _a_i++) {
+            _a_item = Integer.parseInt(in.nextLine());
+            _a[_a_i] = _a_item;
+        }
+        
+        res = maxDifference(_a);
+        bw.write(String.valueOf(res));
+        bw.newLine();
+        
+        bw.close();
+    }
+}
